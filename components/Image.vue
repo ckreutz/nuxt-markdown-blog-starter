@@ -42,7 +42,15 @@ export default {
   },
   computed: {
     imageRequired () {
-      return require(`../assets/images/${this.imageURL}`)
+      let image
+      let imagePath
+      try {
+        image = require(`../assets/images/${this.imageURL}`)
+      } catch (e) {
+        imagePath = this.imageURL.slice(0, -3)
+        image = require(`../assets/images/${imagePath + 'png'}`)
+      }
+      return image
     },
     isRounded () {
       return this.rounded ? 'image-placeholder--rounded' : ''
